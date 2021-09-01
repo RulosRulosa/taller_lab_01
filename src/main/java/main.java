@@ -6,10 +6,10 @@ public class main {
     public static void main(String[] args) {
         Scanner teclado= new Scanner(System.in);
         double arr[][]= new double[10][7];
-        menu();
+        mostrarMenu();
         menuAccion(arr);
     }
-    public static void menu(){
+    public static void mostrarMenu(){
         System.out.println("indique que desea hacer");
         System.out.println("*****************************************************");
         System.out.println("*                                                   *");
@@ -22,10 +22,12 @@ public class main {
         System.out.println("*****************************************************");
     }
     public static void menuAccion(double[][] arreglo){
+        int a= -1;
         do{
-        switch (validar(5)){
+            a=validar(5);
+        switch (a){
             case 1:
-                System.out.println("rellenando arreglo...");
+                System.out.println("los sismos recientes son: ");
                 llenarArreglo(arreglo);
                 break;
             case 2:
@@ -34,6 +36,7 @@ public class main {
                 break;
             case 3:
                 System.out.println("Los sismos mayores o iguales a 5.0 son:");
+                contarSismos(arreglo);
                 break;
             case 4:
                 System.out.println("SMS");
@@ -42,7 +45,11 @@ public class main {
             case 5:
                 System.out.println("adiós");
                 break;
-       }}while(validar(5)==5);
+            }
+            if(a!= 5){
+                System.out.println("¿desea hacer otra cosa? presione 5 para salir");
+            }
+        }while(a!=5);
     }
     public static void llenarArreglo(double arr[][]){
 
@@ -53,10 +60,7 @@ public class main {
               System.out.println(" ");
             }
         }
-        ordenarMatriz(arr, 10, 7);
-        verMatriz(arr, 10, 7);
     }
-
     public static void buscarMayor(double [][] sismos){
         double numeroMayor= 1;
         for (int i = 0; i < 10; i++) {
@@ -66,9 +70,17 @@ public class main {
                 }
             }
         }
+        System.out.println("["+numeroMayor+"]");
     }
-    public static void contarSismos(){
-
+    public static void contarSismos(double [][]sismos){
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 7; j++) {
+                if (sismos[i][j]== 5 || sismos[i][j] > 5){
+                    System.out.println("["+sismos[i][j]+"]");
+                    System.out.println(" ");
+                }
+            }
+        }
     }
     public static void enviarSMS(double [][]sismos){
         for (int i = 0; i < 10; i++) {
@@ -82,32 +94,6 @@ public class main {
             }
         }
     }
-    static void ordenarMatriz(double matriz[][], int nFilas, int nCol){//menor a mayor
-
-        for (int k = 0; k < nFilas; k++) {
-            for (int i = 0; i < nCol ; i++) {
-                for (int j = 0; j < nFilas; j++) {
-                    for (int r = 0; r < nCol; r++) {
-                        if (matriz[k][i]>=matriz[j][r]) {
-                            matriz[k][i]=matriz[k][i];
-                        }else{
-                            double aux=matriz[j][r];
-                            matriz[j][r]=matriz[k][i];
-                            matriz[k][i]=aux;
-                        }
-                    }
-                }
-            }
-        }
-    }
-    static void verMatriz(double matriz[][], int nFilas, int nCol) {
-        for (int i = 0; i < nFilas; i++) {//numero de filas
-            for (int j = 0; j < nCol; j++) {//numero de columnas
-                System.out.print("[" + matriz[i][j] + "]");
-            }
-            System.out.println();
-        }
-    }
     public static int validar(int x) {
         int n = -1;
         do {
@@ -119,10 +105,10 @@ public class main {
             } catch (Exception e) {
                 System.out.println("Error");
             }
-            if (n < 0 || n > x) {
+            if (n < 0 || n == 0|| n > x) {
                 System.out.println("ingrese un numero valido");
             }
-        } while (n < 0 ||n > x);
+        } while (n < 0|| n==0 ||n > x);
         return n;
     }
 }
